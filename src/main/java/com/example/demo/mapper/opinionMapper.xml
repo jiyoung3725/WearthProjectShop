@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="opinion">
+ <!-- 해당 게시글의 문의 글의 전체 조회 -->
+ <select id="findAllEducationOpinion" resultType="opinionVO">
+	select opinionNo, eduNo, goodsNo, lecNo, id, opinionName, opinionContent, opinionDate, opinionSecret, opinionPwd, opinionStatus, REVIEWSCORE, answerNo,type 
+	from opinion where eduNo = #{eduNo} and type = 'opinion' order by opinionNo desc
+ </select>
+ <select id="findAllLectureOpinion" resultType="opinionVO">
+	select opinionNo, eduNo, goodsNo, lecNo, id, opinionName, opinionContent, opinionDate, opinionSecret, opinionPwd, opinionStatus, REVIEWSCORE, answerNo,type 
+	from opinion where lecNo = #{lecNo} and type = 'opinion' order by opinionNo desc
+ </select>
+ <!-- 해당 게시글의 문의 글의 상세 조회 -->
+ <select id="findByNoEducationOpinion" resultType="opinionVO">
+ 	select * from opinion where eduNo = ${eduNo} and opinionNo = #{opinionNo} and type = 'opinion' 
+ </select>
+ <select id="findByNoLectureOpinion" resultType="opinionVO">
+ 	select * from opinion where lecNo = ${lecNo} and opinionNo = #{opinionNo} and type = 'opinion' 
+ </select>
+
+ 	<select id="findByNoOpinion" resultType="opinionVO">
+ 		select * from opinion where opinionNo = #{opinionNo}
+ 	</select>
+ 	
+ 	<select id="getTotalRecordOpinion" resultType="java.lang.Integer">
+ 		select count(*) from opinion
+ 	</select>
+ 	
+ 	<insert id="insertOpinion" parameterType="opinionVO">
+ 	insert into opinion values (seq_opinion.nextval,#{opinionName},#{opinionContent},#{opinionDate},#{opinionSecret},#{opinionPwd},#{opinionStatus},#{opinionScore},#{answerNo},sysdate)
+ 	</insert>
+ 	
+ 	<update id="updateOpinion" parameterType="opinionVO">
+ 		update opinion set opinionName=#{opinionName},opinionContent=#{opinionContent},opinionSecret=#{opinionSecret},opinionStatus=#{opinionStatus} where opinionNo=#{opinionNo} and opinionPwd=#{opinionPwd}
+ 	</update>
+ 	
+ 	<delete id="deleteOpinion" parameterType="opinionVO">
+ 		delete opinion where opinionNo = #{opinionNo} and opinionPwd = #{opinionPwd}
+ 	</delete>
+ 		
+ 	<!--========================================== 쇼핑 ===============================================-->
+ 	
+ 	<!-- 쇼핑 문의 조회 -->
+ 	<select id="selectShopOpinion" resultType="opinionVO">
+ 		select opinionNo,opinionName, opinionContent,id, opinionDate,opinionSecret, opinionPwd, opinionStatus,depth from opinion where goodsNo=#{goodsNo} and type='opinion' order by answerNo desc, opinionDate
+ 	</select>
+ 	
+ 	<!-- 쇼핑 리뷰 조회 -->
+ 	<select id="selectShopReview" resultType="opinionVO">
+ 		select goodsNo, opinionName,id, opinionContent, opinionDate,opinionSecret, opinionPwd, opinionStatus from opinion where goodsNo=#{goodsNo} and type='review' order by  opinionDate desc
+ 	</select>
+ 	
+ 	<!-- 쇼핑 리뷰 사진 모아보기 -->
+ 	<select  id="">
+ 		
+ 	</select>
+ 	
+ 	<!-- 쇼핑 문의글 수정 시 작성한 내용 가져오기 위한 조회 -->
+ 	<select id="selectShopByOpinionNo" resultType="opinionVO">
+ 		select opinionName, opinionContent from opinion where type='opinion' and opinionNo=#{opinionNo}
+ 	</select>
+ 	
+ 	<!-- 쇼핑 문의글 작성 -->
+ 	<insert id="insertShopQNA" parameterType="opinionVO">
+ 		insert into opinion (opinionNo, eduNo, goodsNo, lecNo, id, opinionName, opinionContent, opinionDate, opinionSecret, opinionPwd, opinionStatus, reviewScore, answerNo, type)
+ 		values(seq_opinion.nextVal,#{eduNo, jdbcType=INTEGER},#{goodsNo, jdbcType=INTEGER},#{lecNo,jdbcType=INTEGER},#{id},#{opinionName, jdbcType=VARCHAR},#{opinionContent},sysdate,#{opinionSecret, jdbcType=INTEGER},#{opinionPwd, jdbcType=VARCHAR},'접수',#{reviewScore, jdbcType=INTEGER},#{answerNo, jdbcType=INTEGER},'opinion')
+ 	</insert>
+ 	
+ 	<!-- 쇼핑 문의글 삭제 -->
+ 	<delete id = "deleteShopQNA" parameterType="int">
+ 		delete opinion where opinionNo=#{opinionNo}
+ 	</delete>
+
+ 	<!-- 쇼핑 문의글 수정 -->
+ 	<update id="updateShopQNA" parameterType="int">
+ 		update opinion set  opinionName=#{opinionName},opinionContent=#{opinionContent},opinionSecret=#{opinionSecret jdbcType=INTEGER} where opinionNO=#{opinionNO} 
+ 	</update>
+ 	
+ 	<!-- 쇼핑 문의 상태 변경 -->
+	<update id="updateOpinionStatus" parameterType="int">
+		update opinion set opinionStatus='답변완료' where opinionNo= #{opinionNo} and answerNo is not null;
+	</update>
+	
+
+</mapper>

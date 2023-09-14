@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.custom-btn{
+	width : 300px;
+	background-color : #58b483;
+	color: white;
+	cursor: pointer;
+	border: none;
+	margin-bottom: 10px;
+	border-radius : 30px;
+}
+.custom-btn:hover{
+	width : 300px;
+	background-color : #43a06f;
+	color: white;
+}
+.delete-btn{
+	border: none;
+	background-color: #f3f3f3;
+	border-radius: 30px;
+	width: 300px;
+	cursor: pointer;
+}
+.delete-btn:hover{
+	background-color: #d3d3d3;
+}
+.content{
+	margin-left: 20%;
+	margin-right: 20%;
+	margin-top: 5%;
+}
+.text{
+	width :90%;
+	margin-bottom: 10px;
+}
+#formFileSm{
+	width:97%;
+	margin-bottom: 10px;
+}
+.mb-3{
+	display: inline;
+}
+.btn{
+	text-align: center;
+	width: 100%;
+}

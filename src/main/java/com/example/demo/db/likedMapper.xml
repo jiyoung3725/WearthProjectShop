@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="liked">
+	<!-- 상품 좋아요 추가 -->
+  <insert id="insertGoodsLiked" parameterType="int">
+  	insert into liked(likedNo, userNo, boardNo, lecNo, goodsNo, eduNo, likedDate) 
+  	values(seq_liked.nextval, #{userNo}, #{boardNo, jdbcType=INTEGER}, #{lecNo, jdbcType=INTEGER}, #{goodsNo}, #{eduNo, jdbcType=INTEGER}, sysdate )
+  </insert>
+
+	<!-- 상품 좋아요 취소 -->
+  <delete id ="deleteGoodsLiked" parameterType="int">
+  	delete liked where userNo=#{userNo} and goodsNo=#{goodsNo}
+  </delete>
+  
+  	<!-- 회원별 좋아요 상품 목록 -->
+  	<select id="findLikedGoodsByUserNo" resultType="likedVo">
+  		select userNo, goodsNo from liked where userNo=#{userNo}
+  	</select>
+</mapper>

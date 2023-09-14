@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="com/example/demo/db/db.properties"></properties>
+
+	<typeAliases>
+		<!-- 전수진 -->
+		<typeAlias type="com.example.demo.vo.BoardVO" alias="boardVO" />
+		<typeAlias type="com.example.demo.vo.CommentsVO" alias="commentsVO" />
+		<typeAlias type="com.example.demo.vo.VolunteerVO" alias="volunteerVO" />
+		<typeAlias type="com.example.demo.vo.FilesVO" alias="filesVO" />
+		
+		<!-- 우종호 -->
+		<typeAlias type="com.example.demo.vo.UsersVO" alias="usersVO"/>
+		<!-- 권서현 -->
+		<typeAlias type="com.example.demo.vo.PaymentVO" alias="paymentVO" />
+		<typeAlias type="com.example.demo.vo.OrdersVO" alias="ordersVO" />
+		<typeAlias type="com.example.demo.vo.OrdersDetailVO" alias="ordersdetailVO" />
+		<typeAlias type="com.example.demo.vo.OrdersDetailGoodsVO" alias="ordersdetailgoodsVO" />
+		<!-- 박지영 -->
+		<typeAlias type="com.example.demo.vo.GoodsVO" alias="goodsVO" />
+		<typeAlias type="com.example.demo.vo.GoodsCategoryVO" alias="categoryVO" />
+		<typeAlias type="com.example.demo.vo.OpinionVO" alias="opinionVO" />
+
+		<typeAlias type="com.example.demo.vo.LikedVO" alias="likedVO" />
+		<typeAlias type="com.example.demo.vo.CartVO" alias="cartVO" />
+		<typeAlias type="com.example.demo.vo.DetailCartVO" alias="detailcartVO" />
+		
+		<!-- 류예인 -->
+		<typeAlias type="com.example.demo.vo.EducationVO" alias="educationVO" />
+		<typeAlias type="com.example.demo.vo.LectureVO" alias="lectureVO" />
+		<typeAlias type="com.example.demo.vo.TrainingRequestVO" alias="trainingRequestVO" />
+		<typeAlias type="com.example.demo.vo.OpinionVO" alias="opinionVO" />
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+
+	</environments>
+	<mappers>
+		<!-- 전수진 -->
+		<mapper resource="com/example/demo/mapper/boardMapper.xml" />
+		<mapper resource="com/example/demo/mapper/commentsMapper.xml" />
+		<mapper resource="com/example/demo/mapper/volunteerMapper.xml" />
+		<mapper resource="com/example/demo/mapper/filesMapper.xml" />
+		<!-- 우종호 -->
+		<mapper resource="com/example/demo/mapper/adminMapper.xml"/>
+		<!-- 권서현 -->
+		<mapper resource="com/example/demo/mapper/ordersMapper.xml" />
+		<mapper resource="com/example/demo/mapper/paymentMapper.xml" />
+		<!-- 박지영 -->
+		<mapper resource="com/example/demo/mapper/goodsMapper.xml" />
+		<mapper resource="com/example/demo/mapper/GoodsCategoryMapper.xml" />
+		<mapper resource="com/example/demo/mapper/cartMapper.xml" />
+		<mapper resource="com/example/demo/mapper/likedMapper.xml" />
+		<!-- 류예인 -->
+		<mapper resource="com/example/demo/mapper/educationMapper.xml" />
+		<mapper resource="com/example/demo/mapper/lectureMapper.xml" />
+		<mapper resource="com/example/demo/mapper/trainingRequestMapper.xml" />
+		<mapper resource="com/example/demo/mapper/opinionMapper.xml" />
+		<mapper resource="com/example/demo/mapper/reviewMapper.xml" />
+	</mappers>
+</configuration>

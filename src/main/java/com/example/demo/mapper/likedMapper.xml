@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="liked">
+
+<!-- 상품 좋아요 -->
+	<!-- 상품 좋아요 추가 -->
+  <insert id="insertGoodsLiked" parameterType="int">
+  	insert into liked(likedNo, userNo, boardNo, lecNo, goodsNo, eduNo, likedDate) 
+  	values(seq_liked.nextval, #{userNo}, #{boardNo, jdbcType=INTEGER}, #{lecNo, jdbcType=INTEGER}, #{goodsNo}, #{eduNo, jdbcType=INTEGER}, sysdate )
+  </insert>
+	<!-- 상품 좋아요 취소 -->
+  <delete id ="deleteGoodsLiked" parameterType="int">
+  	delete liked where userNo=#{userNo} and goodsNo=#{goodsNo}
+  </delete>
+  	<!-- 회원별 좋아요 상품 목록 -->
+  	<select id="findLikedGoodsByUserNo" resultType="likedVo">
+  		select userNo, goodsNo from liked where userNo=#{userNo}
+  	</select>
+  	
+  	
+<!-- 교육, 강연 좋아요 -->
+  	<!-- 교육, 강연 좋아요 추가 -->
+  	<insert id="insertEducationLiked" parameterType="map">
+  	insert into liked(likedNo, userno, boardNo, lecNO, goodsNo, eduNO, likedDate) 
+  	values(seq_liked.nextval, #{userno}, #{boardNo, jdbcType=INTEGER}, #{lecNO, jdbcType=INTEGER}, #{goodsNo, jdbcType=INTEGER}, #{eduNO}, sysdate )
+  </insert>
+  <insert id="insertLectureLiked" parameterType="map">
+  	insert into liked(likedNo, userno, boardNo, lecNO, goodsNo, eduNO, likedDate) 
+  	values(seq_liked.nextval, #{userno}, #{boardNo, jdbcType=INTEGER}, #{lecNO}, #{goodsNo, jdbcType=INTEGER}, #{eduNO, jdbcType=INTEGER}, sysdate )
+  </insert>
+  
+  	<!-- 교육, 강연 좋아요 취소 -->
+  <delete id ="deleteEducationLiked" parameterType="map">
+  	delete liked where userno=#{userno} and eduNO=#{eduNO}
+  </delete>
+  <delete id ="deleteLectureLiked" parameterType="map">
+  	delete liked where userno=#{userno} and lecNO=#{lecNO}
+  </delete>
+  
+  	<!-- 교육, 강연 좋아요 상품 목록 -->
+  	<select id="findLikedEducationByUserNo" resultType="educationVO">
+  		select eduNO, eduAddr, eduName, eduApp, eduStatus from education where eduNO in(select eduNO from liked where userno=#{userno} and eduNO IS NOT NULL)
+  	</select>
+  	<select id="findLikedLectureByUserNo" resultType="lectureVO">
+  		select lecNO, lecAddr, lecName, lecApp, lecDate, lecStatus from lecture where lecNO in(select lecNO from liked where userno=#{userno} and lecNO IS NOT NULL)
+  	</select>
+  	
+  	<!-- 좋아요한 eduNO 목록 (화면에 세션유지를 위해 필요) -->
+  	<select id="findLikedEducationNos" resultType="int">
+  		select eduNO from liked where userno = #{userno} and eduNO IS NOT NULL
+  	</select>
+  	<!-- 좋아요한 lecNO 목록 (화면에 세션유지를 위해 필요) -->
+  	<select id="findLikedLectureNos" resultType="int">
+  		select lecNO from liked where userno = #{userno} and lecNO IS NOT NULL
+  	</select>
+</mapper>

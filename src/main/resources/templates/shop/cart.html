@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>장바구니 </title>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script src="/js/shop/cart.js"></script>
+	<link rel="stylesheet" href="/css/shop/cart/cart.css" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Colo Shop Template">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}"> 
+
+</head>
+
+<body>
+	 <div th:include="main/header"></div> 
+	
+	<div class="content">
+		<h1 style="font-weight: bold;">장바구니</h1>
+		<br />
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col" style="width: 15%;">
+						<div class="default">
+							<div class="green">
+								<div class="group green">
+									<input type="checkbox" id="unchecked_green" class="checked_All">
+								</div>
+							</div>
+						</div>
+					</th>
+					<th colspan="2" scope="col" style="width: 40%;">상품정보</th>
+					<th scope="col" style="width: 15%;">수량</th>
+					<th scope="col" style="width: 15%;">주문금액</th>
+					<th scope="col" style="width: 15%;">배송정보</th>
+				</tr>
+			</thead>
+			<tbody >
+				
+				<tr th:each="c : ${cart}" class="tr" id="tr" >
+				
+					<td>
+						<input type="hidden" th:value="${c.goodsNo}" id="goodsNo"/>
+						<input type="hidden" th:value="${c.userNo}" id="userNo"/>
+						<input type="hidden" th:value="${c.goodsStock}" id="goodsStock"/>
+					
+						<div class="default">
+							<div class="green">
+								<div class="group green">
+									<input type="checkbox" id="unchecked_green" name ="check" class="td_check">
+								</div>
+							</div>
+						</div>
+					</td>
+					<td colspan="2" style="text-align: left;">  <img th:src="@{/images/shop/}+${c.mainFname}" style="width : 70px; height: 70px;" />  
+					<a th:href="@{/shop/detail(goodsNo=${c.goodsNo})}"><span th:text="'['+${c.goodsCompany}+']'+${c.goodsName}"></span></a>
+					</td>
+					<td>
+						<div class="num-block skin-5">
+							<div class="num-in">
+								<span class="minus dis">-</span>
+								<input type="text" class="in-num" id="cnt" th:value="${c.cartCnt}" readonly="" >
+								<span class="plus">+</span>
+							</div>
+						</div>
+					</td>
+					<td>
+						<span id="price" th:text="${c.goodsPrice*c.cartCnt*0.8}+'원'"></span>
+						 <br />
+						<button class="pay-btn-small" >주문하기</button>
+					</td>
+					<td><span id="ship" th:text="${c.shipPrice }+'원'"></span></td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<hr />
+		<button class="delete-btn" id="delete-check">선택상품 삭제</button>
+		<button class="delete-btn" id="delete-stock">품절상품 삭제</button>
+
+		<!--주문 합계 start-->
+		<hr />
+		총 주문 수량(<span id="totalCnt"></span>)
+		<hr />
+		<div class="order-tot">
+			<table class="orderTable">
+				<tr>
+					<td class="goodsPrice">0</td>
+					<td class="calc">+</td>
+					<td class="shipPrice">0</td>
+					<td class="calc">=</td>
+					<td class="totalPrice" style="color: #43a06f;">0</td>
+				</tr>
+				<tr>
+					<td>상품금액</td>
+					<td></td>
+					<td colspan="1">배송비</td>
+					<td></td>
+					<td>총 주문 금액</td>
+				</tr>
+			</table>
+		</div>
+		<hr />
+		<!--주문 합계 end-->
+
+		<!--주문버튼 start-->
+		<div class="pay">
+			<button class="pay-btn" id="totPay">주문하기</button> <br />
+			<button class="pay-btn2">Npay 주문하기</button>
+		</div>
+		<!--주문버튼 end-->
+	</div>
+	<div th:include="main/footer.html"></div>
+</body>
+
+</html>

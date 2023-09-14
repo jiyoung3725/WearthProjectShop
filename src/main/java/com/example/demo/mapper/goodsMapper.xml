@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goods">
+
+	<!-- 전체 상품목록 조회 -->
+	<select id="findGoods" resultType="goodsVO">
+		select * from (select rownum as r, goodsNo, MainFname, categoryNo, goodsName, goodsPrice, goodsCompany, goodsUpdate, tot from
+		(select g.goodsNo, g.MainFname, g.categoryNo, g.goodsName, g.goodsPrice, g.goodsCompany, g.goodsUpdate, nvl(tot,0) as tot from goods g left join
+		(select goodsNo, count(likedNo) as tot from liked where goodsNo is not null group by goodsNo order by tot desc ) l on g.goodsNo=l.goodsNo order by
+		<if test="value != null">
+			<if test ="value.equals('liked')"> tot desc )) where r between #{start} and #{end}
+			</if>
+			<if test="value.equals('goodsprice')">  goodsPrice ))where r between #{start} and #{end}
+			</if>
+			<if test="value.equals('highPrice')"> goodsPrice desc ))where r between #{start} and #{end}
+			</if>
+			<if test="value.equals('goodsUpdate')">  goodsUpdate ))where r between #{start} and #{end}
+			</if>
+		</if>
+	</select>
+
+	<!-- 카테고리별 상품목록 조회 및 키워드별(value) 정렬 조회 -->
+	<select id="findByCategoryNo" resultType="goodsVO">
+		select * from(select rownum as r , goodsNo, MainFname, categoryNo, goodsName, goodsPrice, goodsCompany, goodsUpdate, tot from
+		(select g.goodsNo, g.MainFname, g.categoryNo, g.goodsName, g.goodsPrice, g.goodsCompany, g.goodsUpdate, nvl(tot,0) as tot from goods g left join
+		(select goodsNo, count(likedNo) as tot from liked where goodsNo is not null group by goodsNo order by tot desc ) l on g.goodsNo=l.goodsNo  
+		<if test="value != null">
+			<if test ="value.equals('liked')"> where categoryNo= #{categoryNo} order by tot desc )) where r  between #{start} and #{end}
+			</if>
+			<if test="value.equals('goodsprice')">  where categoryNo= #{categoryNo} order by goodsPrice ))where r between #{start} and #{end}
+			</if>
+			<if test="value.equals('highPrice')"> where categoryNo= #{categoryNo} order by goodsPrice desc ))where r between #{start} and #{end}
+			</if>
+			<if test="value.equals('goodsUpdate')">  where categoryNo= #{categoryNo} order by goodsUpdate ))where r between #{start} and #{end}
+			</if>
+		</if>
+	</select>
+
+	<!-- 상품 상세 조회 -->
+	<select id="detailGoods" resultType="goodsVO">
+		select * from goods where goodsNo=#{goodsNo}
+	</select>
+	
+	<!-- 전체레코드 수 조회 -->
+	<select id="getTotalRecord" resultType="int">
+		select count(*) from goods
+		<if test="categoryNo != 1">
+			where categoryNo=#{categoryNo}
+		</if>
+	</select>
+	   <!-- 관심상품 조회 -->
+   <select id="likedGoods" resultType="goodsVO">
+      select g.* from goods g,
+      liked l
+      where
+      g.goodsno=l.goodsno and
+      userno=#{usersno} and l.goodsno is not null order by g.goodsno
+   </select>
+   
+   <!--  maximum of number session 오류로 주석
+   <select id="getTotal" resultType="Long">
+      select sum(g.goodsprice) from goods g, cart c where c.userno=#{userno} and c.goodsno=g.goodsno
+   </select>
+   -->
+	
+	<!-- 상품 리뷰 수 조회 -->
+	<select id="goodsReviewCount" resultType="Integer">
+		select count(*) from opinion where type='review' and goodsNo=#{goodsNo, jdbcType=INTEGER} 
+	</select>
+	 
+	
+	<!-- 상품 문의 수 조회 -->
+	<select id="goodsOpinionCount" resultType="Integer">
+		select count(*) from opinion where type='opinion' and goodsNo=#{goodsNo, jdbcType=INTEGER} and depth is null
+	</select>
+	
+	
+	<!-- 상품 등록  -->
+	<insert id="insertGoods" parameterType="int">
+		insert into (goodsNo, categoryNo, goodsName, goodsPrice, goodsUpdate, goodsCompany, shipPrice, goodsStock, goodsDC, addPoint, origin, mainFname, addFname, infoFname) 
+		values(seq_goodsNo.nextVal(), #{categoryNo}, #{goodsName}, #{goodsPrice}, sysdate, #{goodsCompany}, #{shipPrice}, #{goodsStock}, #{goodsDC}, #{addPoint}, #{origin}, #{mainFname}, #{addFname}, #{infoFname})
+	</insert>
+</mapper>
