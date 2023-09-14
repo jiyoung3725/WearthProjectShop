@@ -32,6 +32,15 @@
 > <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 
 ---
+#### 상세화면
+##### [쇼핑 메인 페이지 및 상품 상세페이지]
+<img width="45%" height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/228b2955-ac55-4e2a-92ea-df585579bf4f"> <img width="50%" height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/9e86e358-8978-47f9-b6ec-ce16d053a42b">
 
 
+##### [상품 상세페이지 리뷰&문의하기] 
+<img width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/85cedf5c-d9aa-4ee3-8102-3dcff1191580"> <img width="50%"  width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/19c97eca-7871-447d-977d-31c70333e0c2">
 
+##### [장바구니 페이지]
+<img width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/dc9118dc-5fc3-4060-bef7-003dc016a2fd">
+
+---
