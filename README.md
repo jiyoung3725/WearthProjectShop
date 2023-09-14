@@ -38,7 +38,10 @@
 
 
 ##### [상품 상세페이지 리뷰&문의하기] 
-<img width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/85cedf5c-d9aa-4ee3-8102-3dcff1191580"> <img width="50%"  width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/19c97eca-7871-447d-977d-31c70333e0c2">
+<img  width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/8e59f2cf-3667-4ad4-ad30-e8599c5e1b5e"> <img width="50%"  width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/19c97eca-7871-447d-977d-31c70333e0c2">
+
+
+
 
 ##### [장바구니 페이지]
 <img width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/dc9118dc-5fc3-4060-bef7-003dc016a2fd">
