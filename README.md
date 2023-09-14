@@ -54,5 +54,53 @@
 <img width="45%"  height="400px" src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/dc9118dc-5fc3-4060-bef7-003dc016a2fd">
 
 ---
-#### 트러블슈팅
+#### 핵심 트러블슈팅
+
+##### [장바구니 선택한 상품의 정보 전달하기]
+* 사용자가 선택한 여러 개의 상품을 삭제하거나 주문할 때  상품 정보를 배열에 담아 ajax통신으로 controller에 값을 전달하고자 했습니다.  <br>
+
+* 정보를 찾아보며 ajax으로 배열의 값을 전달하는 방법을 찾아보고 controller에서 배열의값을 받아보고자 수차례 시도했으나 반복되는 400, 504, 500 에러로 다른 방법을 찾아야 했습니다.
+
+* 해결방법으로는 $().each(function(){})를 사용해서 ajax통신을 반복하는 것이었습니다.
+
+```javascript
+function clickEvent(event){		
+   var row = $(event.target).parent().parent().parent().parent().parent();
+   var columns = row.children();		
+   cnt = parseInt(columns.eq(2).find('#cnt').val());
+   price = parseInt(columns.eq(3).find('#price').html());
+   console.log(cnt)
+   console.log(price)
+			
+    //선택상품 삭제 누르면 삭제
+    $("#delete-check").click(function(){
+       $(row).each(function(){
+      goodsNo = parseInt(columns.eq(0).find("#goodsNo").val());
+      $.ajax({
+        url : "/deleteCartByGoodsNo",
+        type : "post",
+        data: {goodsNo:goodsNo, userNo:userNo},
+        beforeSend: function (xhr) {xhr.setRequestHeader(header, token);},
+        success: function (data) {
+          document.location.reload();
+        }
+      })
+    })
+```
+
+#### 이 외의 트러블 슈팅
+
+  <details> resultType, resultMap을 설정하거나 조인을 위한 새로운 VO를 만들어 getter,setter,toString 만들어 해
+  <summary> 마이바티스 조인하기 </summary></details> 
+
+   <details> Vo파일을 공유해서 사용하다보니 git에 push/ pull하는 과정에서 팀원이 사전에 프로파일링한 규칙대로 작성하지 않아 오류가 난 것. 
+  <summary> parameter mapping 오류[String을 integer로 인식] </summary></details> 
+
+  <details> 수정버튼을 누르면 작성하기와 동일한 모달창이 떠서 ajax통신으로 input태그에 값을 넣어 해결.
+  <summary> 문의글 수정 시 사용자가 작성한 값 넣기 </summary></details> 
+
+---
+
+
+   
 
