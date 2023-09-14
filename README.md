@@ -1,4 +1,4 @@
-### WEARTH Project - Shop
+### WEARTH Team Project - Shop
 ---
 <p align="center">
   <img src="https://github.com/jiyoung3725/WearthProjectShop/assets/130877885/45ad8ec1-a873-46f8-85a6-d8af76f36637" width="250" >
